@@ -13,18 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\DataProcessing">
+      <UniqueIdentifier>{4d9c4793-a4fe-42b6-ab11-6dc3e1bf7766}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assembler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Hex.cpp">
+    <ClCompile Include="MOVE.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Binary.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MOVT.cpp">
+    <ClCompile Include="SingleDataProcessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -37,14 +37,11 @@
     <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Hex.h">
+    <ClInclude Include="MOVE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Binary.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MOVT.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="SingleDataProcessing.h">
+      <Filter>Header Files\DataProcessing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
