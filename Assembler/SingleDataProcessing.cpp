@@ -14,11 +14,10 @@ SingleDataProcessing::SingleDataProcessing(std::string code, std::string registr
 std::vector<std::bitset<8>>* SingleDataProcessing::GetBits()
 {
     std::vector<std::bitset<8>>* bits = new std::vector<std::bitset<8>>();
-    std::string bitstring = ConditionCode + bitShift + usingImmediate + operationCode + usingSBit + firstOpperandRegister + Register + secondOpperand;
+    std::string bitstring = ConditionCode + bitShift + usingImmediate + operationCode + usingSBit + Register + firstOpperandRegister + secondOpperand;
     bits->push_back(std::bitset<8>(bitstring.substr(24, 8)));
     bits->push_back(std::bitset<8>(bitstring.substr(16, 8)));
     bits->push_back(std::bitset<8>(bitstring.substr(8, 8)));
     bits->push_back(std::bitset<8>(bitstring.substr(0,8)));
-    std::cout << bitstring << std::endl;
     return bits;
 }

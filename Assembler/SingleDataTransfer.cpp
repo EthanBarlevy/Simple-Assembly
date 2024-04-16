@@ -17,11 +17,10 @@ SingleDataTransfer::SingleDataTransfer(std::string code, std::string registry, s
 std::vector<std::bitset<8>>* SingleDataTransfer::GetBits()
 {
     std::vector<std::bitset<8>>* bits = new std::vector<std::bitset<8>>();
-    std::string bitstring = ConditionCode + bitShift + usingImmediate + indexingBit + upBit + wordBit + writeBackBit + loadStoreBit + firstOpperandRegister + Register + secondOpperand;
+    std::string bitstring = ConditionCode + bitShift + usingImmediate + indexingBit + upBit + wordBit + writeBackBit + loadStoreBit + Register + firstOpperandRegister + secondOpperand;
     bits->push_back(std::bitset<8>(bitstring.substr(24, 8)));
     bits->push_back(std::bitset<8>(bitstring.substr(16, 8)));
     bits->push_back(std::bitset<8>(bitstring.substr(8, 8)));
     bits->push_back(std::bitset<8>(bitstring.substr(0, 8)));
-    std::cout << bitstring << std::endl;
     return bits;
 }

@@ -35,6 +35,5 @@ std::vector<std::bitset<8>>* MOVE::GetBits()
     bits->push_back(std::bitset<8>(Register + imm12.substr(0, 4)));
     bits->push_back(std::bitset<8>(q + imm4));
     bits->push_back(std::bitset<8>( ConditionCode + c));
-    std::cout << bitstring << std::endl;
     return bits;
 }

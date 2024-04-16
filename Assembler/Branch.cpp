@@ -15,6 +15,5 @@ std::vector<std::bitset<8>>* Branch::GetBits()
     bits->push_back(std::bitset<8>(bitstring.substr(16, 8)));
     bits->push_back(std::bitset<8>(bitstring.substr(8, 8)));
     bits->push_back(std::bitset<8>(bitstring.substr(0, 8)));
-    std::cout << bitstring << std::endl;
     return bits;
 }
