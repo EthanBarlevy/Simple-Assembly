@@ -1,18 +1,17 @@
 #include "MOVE.h"
+#include <iostream>
 
-MOVE::MOVE()
+MOVE::MOVE(std::string code, std::string registry) : Command(code, registry)
 {
     c = "0011";
     q = "0000";
-    imm12[0] = "";
-    imm12[1] = "";
-    imm12[2] = "";
+    imm12 = "";
     imm4 = "";
 }
 
-MOVE::MOVE(MOVE::Half side) : MOVE()
+MOVE::MOVE(std::string code, std::string registry, MOVE::Half side) : MOVE(code, registry)
 {
-    if (side == MOVE::Half::FRONT || side == MOVE::Half::W)
+    if (side == MOVE::Half::FRONT)
     {
         q = "0000";
     }
@@ -22,20 +21,20 @@ MOVE::MOVE(MOVE::Half side) : MOVE()
     }
 }
 
-std::bitset<8>* MOVE::GetBits()
+MOVE::MOVE(std::string code, Half side, std::string im4, std::string registry, std::string im12) : MOVE(code, registry, side)
 {
-    static std::bitset<8> bits[4];
-    bits[3] = std::bitset<8>( ConditionCode + c);
-    bits[2] = std::bitset<8>(q + imm4);
-    bits[1] = std::bitset<8>(Register + imm12[0]);
-    bits[0] = std::bitset<8>(imm12[1] + imm12[2]);
-    return bits;
+    imm4 = im4;
+    imm12 = im12;
 }
 
-void MOVE::setImmediate(std::string& immediate)
+std::vector<std::bitset<8>>* MOVE::GetBits()
 {
-    imm4 = immediate.substr(0, 4);
-    imm12[0] = immediate.substr(4, 4);
-    imm12[1] = immediate.substr(8, 4);
-    imm12[2] = immediate.substr(12, 4);
+    std::vector<std::bitset<8>>* bits = new std::vector<std::bitset<8>> ();
+    std::string bitstring = ConditionCode + c + q + imm4 + Register + imm12;
+    bits->push_back(std::bitset<8>(imm12.substr(4, 8)));
+    bits->push_back(std::bitset<8>(Register + imm12.substr(0, 4)));
+    bits->push_back(std::bitset<8>(q + imm4));
+    bits->push_back(std::bitset<8>( ConditionCode + c));
+    std::cout << bitstring << std::endl;
+    return bits;
 }

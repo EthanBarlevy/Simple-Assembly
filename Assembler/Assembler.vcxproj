@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Assembler.cpp" />
     <ClCompile Include="Branch.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="MOVE.cpp" />
     <ClCompile Include="SingleDataProcessing.cpp" />
     <ClCompile Include="SingleDataTransfer.cpp" />
