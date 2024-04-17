@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\DataProcessing">
-      <UniqueIdentifier>{4d9c4793-a4fe-42b6-ab11-6dc3e1bf7766}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Assembler.cpp">
@@ -49,13 +46,13 @@
     <ClInclude Include="MOVE.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SingleDataProcessing.h">
-      <Filter>Header Files\DataProcessing</Filter>
-    </ClInclude>
     <ClInclude Include="Branch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SingleDataTransfer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleDataProcessing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

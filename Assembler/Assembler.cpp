@@ -148,6 +148,8 @@ Command* ProcessData(std::string line)
     return nullptr;
 }
 
+// -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- MAIN -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
 int main()
 {
     std::ifstream inputFile("Resources/blinking.txt"); // open the txt file
@@ -163,14 +165,15 @@ int main()
         commandList.push_back(ProcessData(line)); // process each command line by line and add them to a list
     }
     
+    std::string outputFile = "kernel7.img";
+
     for (auto command : commandList)
     {
         std::vector<std::bitset<8>>* bits = command->GetBits(); // format the bits 
-        append_to_image_file("kernel7.img", bits->at(0)); // write it to a file
-        append_to_image_file("kernel7.img", bits->at(1)); // dont question why i have 4
-        append_to_image_file("kernel7.img", bits->at(2)); // i dont understand programming
-        append_to_image_file("kernel7.img", bits->at(3)); // and a compiler is dumb
+        append_to_image_file(outputFile, bits->at(0)); // write it to a file
+        append_to_image_file(outputFile, bits->at(1)); // dont question why i have 4
+        append_to_image_file(outputFile, bits->at(2)); // i dont understand programming
+        append_to_image_file(outputFile, bits->at(3)); // and a compiler is dumb
     }
-
+    std::cout << "All data has been written to " << outputFile << std::endl;
 }
-
