@@ -86,6 +86,29 @@ std::bitset<4>* GetOppCode(std::string token)
     return nullptr;
 }
 
+void ComputeOffsets(std::vector<std::string>& commands)
+{
+    for (int i = 0; i < commands.size(); i++)
+    {
+        std::vector<std::string> tokens = tokenize(commands[i]);
+        if (contains(tokens[tokens.size() - 1], "<<"))
+        {
+            std::string function = tokens[tokens.size() - 1].substr(2);
+            for (int j = 0; j < commands.size(); j++)
+            {
+                std::vector<std::string> tokens2 = tokenize(commands[j]);
+                if (contains(tokens2[tokens2.size() - 1], ">>" + function))
+                {
+                    std::stringstream stream;
+                    stream << std::hex << (j - i - 2);
+                    commands[i] = commands[i].substr(0, commands[i].find("<<")) + stream.str();
+                    break;
+                }
+            }
+        }
+    }
+}
+
 // where everything happens lol
 Command* ProcessData(std::string line)
 {
@@ -137,10 +160,15 @@ Command* ProcessData(std::string line)
     }
     if (contains(tokens[0], "B")) // branch commands
     {
-        std::string lbit = "0";
-        if (tokens[0].size() > 3 || tokens[0].size() == 2)
+        if (contains(tokens[0], "BX"))
         {
-            lbit = tokens[0][1] == 'L' ? "1" : "0";
+            std::bitset<4> registry(std::stoul(tokens[1].substr(1), nullptr, 16));
+            return new Branch(condition.to_string(), registry.to_string());
+        }
+        std::string lbit = "0";
+        if (contains(tokens[0], "BL"))
+        {
+            lbit = "1";
         }
         std::bitset<24> offset(std::stoul(tokens[1], nullptr, 16));
         return new Branch(condition.to_string(), "0000", lbit, offset.to_string());
@@ -152,7 +180,8 @@ Command* ProcessData(std::string line)
 
 int main()
 {
-    std::ifstream inputFile("Resources/blinking.txt"); // open the txt file
+    std::ifstream inputFile("Resources/blinking-function.txt"); // open the txt file
+    std::vector<std::string> commandStrings;
     std::vector<Command*> commandList;
 
     if (!inputFile.is_open()) {
@@ -162,7 +191,14 @@ int main()
 
     std::string line;
     while (std::getline(inputFile, line)) {
-        commandList.push_back(ProcessData(line)); // process each command line by line and add them to a list
+        commandStrings.push_back(line);
+    }
+
+    ComputeOffsets(commandStrings); // convert <<[function_name] to the offset number
+
+    for (auto string : commandStrings)
+    {
+        commandList.push_back(ProcessData(string)); // process each command line by line and add them to a list
     }
     
     std::string outputFile = "kernel7.img";
