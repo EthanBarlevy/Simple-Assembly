@@ -41,6 +41,9 @@
     <Text Include="Resources\blinking-function.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="Resources\blinking-stack.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">

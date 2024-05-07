@@ -136,6 +136,7 @@
     <ClCompile Include="SingleDataTransfer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Resources\blinking-stack.txt" />
     <Text Include="Resources\blinking.txt" />
     <Text Include="Resources\blinking-function.txt" />
   </ItemGroup>

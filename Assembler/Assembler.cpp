@@ -86,6 +86,7 @@ std::bitset<4>* GetOppCode(std::string token)
     return nullptr;
 }
 
+// offset for functions
 void ComputeOffsets(std::vector<std::string>& commands)
 {
     for (int i = 0; i < commands.size(); i++)
@@ -146,17 +147,27 @@ Command* ProcessData(std::string line)
     }
     if (contains(tokens[0], "LDR") || contains(tokens[0], "STR")) // this is for load and store commands
     {
-        std::string bitShift = "01";
-        std::string usingImmediate = "0";
         std::string indexingBit = "0";
         std::string upBit = "0";
-        std::string wordBit = "0";
         std::string writeBit = "0";
+        std::bitset<12> offset = 0;
+        if (contains(tokens[0], "EA"))
+        {
+            indexingBit = contains(tokens[0], "LDR") ? "1" : "0";
+            upBit = contains(tokens[0], "LDR") ? "0" : "1";
+            if (contains(tokens[1], "!"))
+            {
+                writeBit = "1";
+            }
+            std::bitset<12> offset = std::stoul(tokens[3]);
+        }
+        std::string bitShift = "01";
+        std::string usingImmediate = "0";
+        std::string wordBit = "0";
         std::string loadStoreBit = contains(tokens[0], "LDR") ? "1" : "0";
         std::bitset<4> registry(tokens[2][2]);
         std::bitset<4> firstOpperand(tokens[1][1]);
-        std::string offset = "000000000000";
-        return new SingleDataTransfer(condition.to_string(), registry.to_string(), bitShift, usingImmediate, indexingBit, upBit, wordBit, writeBit, loadStoreBit, firstOpperand.to_string(), offset);
+        return new SingleDataTransfer(condition.to_string(), registry.to_string(), bitShift, usingImmediate, indexingBit, upBit, wordBit, writeBit, loadStoreBit, firstOpperand.to_string(), offset.to_string());
     }
     if (contains(tokens[0], "B")) // branch commands
     {
@@ -180,7 +191,7 @@ Command* ProcessData(std::string line)
 
 int main()
 {
-    std::ifstream inputFile("Resources/blinking-function.txt"); // open the txt file
+    std::ifstream inputFile("Resources/blinking-stack.txt"); // open the txt file
     std::vector<std::string> commandStrings;
     std::vector<Command*> commandList;
 
