@@ -6,6 +6,7 @@
 #include "MOVE.h"
 #include "SingleDataProcessing.h"
 #include "SingleDataTransfer.h"
+#include "MultiDataTransfer.h"
 #include "Branch.h"
 
 // write to the file in a very inefficent way
@@ -118,7 +119,7 @@ Command* ProcessData(std::string line)
 
     if (contains(tokens[0], "MOV")) // this is the worst possible way of doing things but idk a better way
     {
-        std::bitset<4> registry(tokens[1][1]);
+        std::bitset<4> registry(std::stoul(tokens[1].substr(1,1), nullptr, 16));
         std::bitset<16> immediate(std::stoul(tokens[2], nullptr, 16));
         std::string immediateString = immediate.to_string();
         if (contains(tokens[0], "W"))
@@ -159,15 +160,33 @@ Command* ProcessData(std::string line)
             {
                 writeBit = "1";
             }
-            std::bitset<12> offset = std::stoul(tokens[3]);
+            offset = std::stoul(tokens[3], nullptr, 16);
         }
         std::string bitShift = "01";
         std::string usingImmediate = "0";
         std::string wordBit = "0";
         std::string loadStoreBit = contains(tokens[0], "LDR") ? "1" : "0";
-        std::bitset<4> registry(tokens[2][2]);
-        std::bitset<4> firstOpperand(tokens[1][1]);
+        std::bitset<4> registry(std::stoul(tokens[2].substr(2, 1), nullptr, 16));
+        std::bitset<4> firstOpperand(std::stoul(tokens[1].substr(1,1), nullptr, 16));
         return new SingleDataTransfer(condition.to_string(), registry.to_string(), bitShift, usingImmediate, indexingBit, upBit, wordBit, writeBit, loadStoreBit, firstOpperand.to_string(), offset.to_string());
+    }
+    else if (contains(tokens[0], "LDM") || contains(tokens[0], "STM"))
+    {
+        std::string indexingBit = "0";
+        std::string upBit = "0";
+        std::string writeBit = "0";
+        if (contains(tokens[0], "EA"))
+        {
+            indexingBit = contains(tokens[0], "LDR") ? "1" : "0";
+            upBit = contains(tokens[0], "LDR") ? "0" : "1";
+            if (contains(tokens[1], "!"))
+            {
+                writeBit = "1";
+            }
+        }
+        std::string loadStoreBit = contains(tokens[0], "LDR") ? "1" : "0";
+        std::bitset<4> registry(std::stoul(tokens[1].substr(1, 1), nullptr, 16));
+        return new MultiDataTransfer(condition.to_string(), registry.to_string(), indexingBit, upBit, "0", writeBit, loadStoreBit, "0001111111111111");
     }
     if (contains(tokens[0], "B")) // branch commands
     {
@@ -191,7 +210,7 @@ Command* ProcessData(std::string line)
 
 int main()
 {
-    std::ifstream inputFile("Resources/blinking-stack.txt"); // open the txt file
+    std::ifstream inputFile("Resources/test.txt"); // open the txt file
     std::vector<std::string> commandStrings;
     std::vector<Command*> commandList;
 

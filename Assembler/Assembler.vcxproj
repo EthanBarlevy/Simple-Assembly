@@ -132,6 +132,7 @@
     <ClCompile Include="Branch.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="MOVE.cpp" />
+    <ClCompile Include="MultiDataTransfer.cpp" />
     <ClCompile Include="SingleDataProcessing.cpp" />
     <ClCompile Include="SingleDataTransfer.cpp" />
   </ItemGroup>
@@ -139,11 +140,13 @@
     <Text Include="Resources\blinking-stack.txt" />
     <Text Include="Resources\blinking.txt" />
     <Text Include="Resources\blinking-function.txt" />
+    <Text Include="Resources\test.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Branch.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="MOVE.h" />
+    <ClInclude Include="MultiDataTransfer.h" />
     <ClInclude Include="SingleDataProcessing.h" />
     <ClInclude Include="SingleDataTransfer.h" />
   </ItemGroup>
