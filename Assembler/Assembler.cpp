@@ -156,7 +156,7 @@ Command* ProcessData(std::string line)
         {
             indexingBit = contains(tokens[0], "LDR") ? "1" : "0";
             upBit = contains(tokens[0], "LDR") ? "0" : "1";
-            if (contains(tokens[1], "!"))
+            if (contains(tokens[2], "!"))
             {
                 writeBit = "1";
             }
@@ -210,7 +210,7 @@ Command* ProcessData(std::string line)
 
 int main()
 {
-    std::ifstream inputFile("Resources/test.txt"); // open the txt file
+    std::ifstream inputFile("Resources/blinking-stack.txt"); // open the txt file
     std::vector<std::string> commandStrings;
     std::vector<Command*> commandList;
 
@@ -231,7 +231,7 @@ int main()
         commandList.push_back(ProcessData(string)); // process each command line by line and add them to a list
     }
     
-    std::string outputFile = "kernel7.img";
+    std::string outputFile = "Resources/kernel7.img";
 
     for (auto command : commandList)
     {
