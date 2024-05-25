@@ -1,62 +1,50 @@
-MOVW RD, 0
-MOVT RD, 0
-
+MOVW Rd, 0000
+MOVT Rd, 0000
 STMEA RD!
 BL <<initializePin
 LDMEA RD!
-
-MOVW R9, 0003 >>start
-MOVT R9, 0
-
+MOVW R9, 0004 >>start
+MOVT R9, 0000
 STMEA RD! >>short
 BL <<blink
 LDMEA RD!
-
 SUBS R9, R9, 01
 BPL <<short
-
 MOVW R0, 0900
 MOVT R0, 003D
 STREA R0, (RD!), 4
 BL <<delay
-
 B <<start
-
 LDREA R6, (RD!), 4 >>delay
 SUBS R6, R6, 01 >>sub
 BPL <<sub
 BX RE
-
-MOVW R4, 0 >>initializePin
+MOVW R4, 0000 >>initializePin
 MOVT R4, 3F20
 ADD R2, R4, 08
 LDR R3, (R2)
-ORR R3, R3, 008
+ORR R3, R33, 008
 STR R3, (R2)
 BX RE
-
 ADD R3, R4, 1c >>blink
 MOVW R2, 0000
 MOVT R2, 0020
 STR R2, (R3)
-
 STMEA RD!
 MOVW R0, 4240
-MOVT R0, 000F
+MOVT R0, 000f
 STREA RE, (RD!), 4
 STREA R0, (RD!), 4
 BL <<delay
 LDREA RE, (RD!), 4
 LDMEA RD!
-
 ADD R3, R4, 28
 MOVW R2, 0000
 MOVT R2, 0020
 STR R2, (R3)
-
 STMEA RD!
 MOVW R0, 4240
-MOVT R0, 000F
+MOVT R0, 000f
 STREA RE, (RD!), 4
 STREA R0, (RD!), 4
 BL <<delay

@@ -175,6 +175,7 @@ Command* ProcessData(std::string line)
         std::string indexingBit = "0";
         std::string upBit = "0";
         std::string writeBit = "0";
+        std::string registers = "0001111111111111";
         if (contains(tokens[0], "EA"))
         {
             indexingBit = contains(tokens[0], "LDR") ? "1" : "0";
@@ -183,10 +184,17 @@ Command* ProcessData(std::string line)
             {
                 writeBit = "1";
             }
+            if (tokens.size() >= 3)
+            {
+                if (contains(tokens[2], "E"))
+                {
+                    registers = "0101111111111111";
+                }
+            }
         }
         std::string loadStoreBit = contains(tokens[0], "LDR") ? "1" : "0";
         std::bitset<4> registry(std::stoul(tokens[1].substr(1, 1), nullptr, 16));
-        return new MultiDataTransfer(condition.to_string(), registry.to_string(), indexingBit, upBit, "0", writeBit, loadStoreBit, "0001111111111111");
+        return new MultiDataTransfer(condition.to_string(), registry.to_string(), indexingBit, upBit, "0", writeBit, loadStoreBit, registers);
     }
     if (contains(tokens[0], "B")) // branch commands
     {
@@ -210,7 +218,7 @@ Command* ProcessData(std::string line)
 
 int main()
 {
-    std::ifstream inputFile("Resources/blinking-stack.txt"); // open the txt file
+    std::ifstream inputFile("Resources/output.txt"); // open the txt file
     std::vector<std::string> commandStrings;
     std::vector<Command*> commandList;
 
@@ -221,7 +229,10 @@ int main()
 
     std::string line;
     while (std::getline(inputFile, line)) {
-        commandStrings.push_back(line);
+        if (line.size() > 0)
+        {
+            commandStrings.push_back(line);
+        }
     }
 
     ComputeOffsets(commandStrings); // convert <<[function_name] to the offset number
